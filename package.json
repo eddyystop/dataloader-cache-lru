@@ -1,12 +1,18 @@
 {
   "name": "dataloader-cache-lru",
-  "description": "LRU (least recently used) cache for Facebook&#39;s DataLoader.",
+  "description": "LRU (least recently used) cache for Facebook's DataLoader.",
   "version": "0.0.0",
   "homepage": "https://github.com/eddyystop/dataloader-cache-lru",
   "main": "lib/",
   "keywords": [
     "feathers",
-    "feathers-plugin"
+    "feathers-plus",
+    "feathers-plugin",
+    "dataloader",
+    "DataLoader",
+    "GraphQL",
+    "cache",
+    "LRU"
   ],
   "license": "MIT",
   "repository": {
@@ -14,9 +20,8 @@
     "url": "git://github.com/eddyystop/dataloader-cache-lru.git"
   },
   "author": {
-    "name": "Feathers contributors",
-    "email": "hello@feathersjs.com",
-    "url": "https://feathersjs.com"
+    "name": "John Joseph Szwaronek",
+    "email": "johnsz9999 at gmail dot com"
   },
   "contributors": [],
   "bugs": {
