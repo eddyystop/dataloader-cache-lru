@@ -53,6 +53,26 @@ describe('index.test.js', () => {
       .catch(catcher(done));
   });
 
+  it('DataLoader clears keys', done => {
+    const cacheMap = dataLoaderCacheLru();
+    const dataloader = new DataLoader(batchLoadFn, { cacheMap });
+    const testKeys = ['a', 'b', 'c', 'd', 'e'];
+
+    Promise.all(
+      testKeys.map(key => dataloader.load(key))
+    )
+      .then(data => {
+        assert.deepEqual(data, testKeys.map(key => ({ key, data: key })), 'bad return dataloader value');
+        assert.deepEqual(cacheMap.keys().sort(), testKeys, 'bad cached keys');
+
+        dataloader.clear('a');
+        dataloader.clear('c');
+        assert.deepEqual(cacheMap.keys().sort(), ['b', 'd', 'e'], 'bad cached keys');
+        done();
+      })
+      .catch(catcher(done));
+  });
+
   it('Cache drops LRU items', done => {
     const max = 3;
     const cacheMap = dataLoaderCacheLru({ max });
