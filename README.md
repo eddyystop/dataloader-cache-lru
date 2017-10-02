@@ -28,10 +28,16 @@ least recently used items when the cache size is exceeded.
 const DataLoader = require('dataloader');
 const dataLoaderCacheLru = require('dataloader-cache-lru');
 
-const options = { max: 100 }; // see https://github.com/isaacs/node-lru-cache for options
-const dataloader = new DataLoader(batchLoadFn, { cacheMap: dataLoaderCacheLru(options)})
+const options = { max: 3 };
+const dataloader = new DataLoader(batchLoadFn, { cacheMap: dataLoaderCacheLru(options) });
 
-dataloader.load(key).then(data => console.log(data));
+Promise.all(
+  ['a', 'b', 'c', 'd', 'e'].map(key => dataloader.load(key))
+)
+  .then(data => {
+    console.log(data); // [{ key: 'a', data: 'a' ), ..., { key: 'e', data: 'e' }]
+    console.log(cacheMap.keys().sort()); // ['c', 'd', 'e']
+  });
 
 function batchLoadFn (keys) {
   return Promise.all(
